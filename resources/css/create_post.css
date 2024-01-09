@@ -1,6 +1,7 @@
 @import "bootstrap/dist/css/bootstrap.css";
 @import "select2/dist/css/select2.css";
 @import "summernote/dist/summernote-lite.css";
+@import "toastify-js/src/toastify.css";
 
 span.select2.select2-container.select2-container--default{
     width: 100%!important;
@@ -82,4 +83,7 @@ ul#tagList li > span.rmTag {
 }
 ul#tagList li > span.rmTag:hover {
     background-color: #ef9a9a;
+}
+.btn-add-tag svg{
+    width: 15px;
 }

@@ -17,7 +17,7 @@ $('#comment').on('submit', function (e) {
     let $data = new FormData();
 
     if ($content === '') {
-        let $textToast = $(e.target).find('button[type=submit]').data('validate-false');
+        const $textToast = $(e.target).find('button[type=submit]').data('validate-false');
 
         Toastify({
             text: $textToast,
@@ -32,7 +32,7 @@ $('#comment').on('submit', function (e) {
         }).showToast();
     } else {
         $(e.target).find('.emojionearea-editor').html('');
-        let $textToast = $(e.target).find('button[type=submit]').data('validate-true');
+        const $textToast = $(e.target).find('button[type=submit]').data('validate-true');
 
         $data.append('postId', $postId);
         $data.append('userId', $userId);

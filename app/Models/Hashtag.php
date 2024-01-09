@@ -12,6 +12,8 @@ class Hashtag extends Model
 
     protected $table = 'hashtags';
 
+    protected $fillable = ['name', 'slug'];
+
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'post_hashtag', 'hashtag_id', 'post_id');

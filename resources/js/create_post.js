@@ -1,6 +1,7 @@
 import $ from "jquery"
 import "select2/dist/js/select2"
 import 'summernote/dist/summernote-lite';
+import Toastify from "toastify-js";
 
 (function () {
     $('#content').summernote({
@@ -12,11 +13,14 @@ import 'summernote/dist/summernote-lite';
 
     let tagList = [];
     let idList = [];
+    let addList = [];
 
     const $tagList = $("#tagList");
     const $newTag = $("#newTag");
     const $boxSearch = $('.hashtag-result');
     const $storageTag = $("input[name=hashtag]");
+    const $btnAdd = $(".js-add-tag");
+    const $hashtagAdd = $("input[name=newHashtag]");
 
     $(document).ready(function () {
         let $type = $storageTag.attr('data-type');
@@ -45,7 +49,7 @@ import 'summernote/dist/summernote-lite';
     {
         $tagList.empty();
         tagList.map(function (_tag) {
-            let temp = '<li>' + _tag + '<span class="rmTag">&times;</span></li>';
+            let temp = '<li><label>' + _tag + '</label><span class="rmTag">&times;</span></li>';
             $tagList.append(temp);
         });
     }
@@ -73,6 +77,32 @@ import 'summernote/dist/summernote-lite';
         }
     });
 
+    $btnAdd.click((e) => {
+        e.preventDefault();
+        let newTag = $("#newTag").val().trim().toLowerCase();
+        const $textToast = $(e.target).attr('data-toast');
+        if (newTag !== '') {
+            if (tagList.indexOf(newTag) === -1 && addList.indexOf(newTag) === -1) {
+                tagList.push(newTag);
+                addList.push(newTag);
+                $newTag.val('');
+                tagList_render();
+            } else {
+                Toastify({
+                    text: $textToast,
+                    duration: 3000,
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    stopOnFocus: true,
+                    style: {
+                        background: "linear-gradient(to right, rgb(255, 0, 0), rgb(255, 153, 153))"
+                    }
+                }).showToast();
+            }
+        }
+    });
+
     $boxSearch.find('li').click((e) => {
         let $slug = $(e.target).attr('data-slug');
         let $id = $(e.target).attr('data-id');
@@ -86,9 +116,18 @@ import 'summernote/dist/summernote-lite';
     });
 
     $tagList.on("click", "li>span.rmTag", function () {
-        var index = $(this).parent().index();
-        idList.splice(index, 1);
+        let index = $(this).parent().index();
+        let textTagAdd = $(this).parent().find('label').html();
+
+        if ($.inArray(textTagAdd, addList) !== -1) {
+            addList = $.grep(addList, function (value) {
+                return value !== textTagAdd;
+            });
+        } else {
+            idList.splice(index, 1);
+        }
         tagList.splice(index, 1);
+
         tagList_render();
     });
 
@@ -97,6 +136,9 @@ import 'summernote/dist/summernote-lite';
         $storageTag.val(null);
         if (idList.length > 0) {
             $storageTag.val(idList.join(','));
+        }
+        if (addList.length > 0) {
+            $hashtagAdd.val(addList.join(','));
         }
         $(this).submit();
     });

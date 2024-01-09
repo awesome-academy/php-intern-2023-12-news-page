@@ -21,7 +21,7 @@
                             title="Avatar của {{ $userInfo->name }}" alt="">
                         <div class="">
                             <h5 class="info-post-verify">
-                                <div class="js-title-report">{{ $userInfo->name }}</div>
+                                {{ $userInfo->name }}
                                 @if ($userInfo->verify)
                                     <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
                                         <path

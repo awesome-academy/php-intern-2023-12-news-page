@@ -71,6 +71,7 @@ class PostController extends Controller
             'title' => $request['title'],
             'description' => $request['description'],
             'hashtag' => $request['hashtag'],
+            'hashtagCustom' => $request['newHashtag'],
             'thumbnail' => $request['file'],
         ];
         $action = config('constants.post.postStore');
@@ -103,6 +104,7 @@ class PostController extends Controller
             'title' => $request['title'],
             'description' => $request['description'],
             'hashtag' => $request['hashtag'],
+            'hashtagCustom' => $request['newHashtag'],
             'thumbnail' => $request['file'],
         ];
         $action = config('constants.post.postUpdate');

@@ -1221,5 +1221,6 @@
     "Unset Moderator": "Unset Moderator",
     "Unverified": "Unverified",
     "This post had been verified": "This post had been verified",
-    "Enter the id you want to search for": "Enter the id you want to search for"
+    "Enter the id you want to search for": "Enter the id you want to search for",
+    "The tag already exists in the list.": "The tag already exists in the list."
 }

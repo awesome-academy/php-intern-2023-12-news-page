@@ -38,7 +38,7 @@ $btnSubmitReport.click((e) => {
     let $csrfToken = $('meta[name="csrf-token"]').attr('content');
 
     if ($content === '') {
-        let $textToast = $(e.target).data('validate-false');
+        const $textToast = $(e.target).data('validate-false');
 
         Toastify({
             text: $textToast,
@@ -53,7 +53,7 @@ $btnSubmitReport.click((e) => {
         }).showToast();
     } else {
         let $data = new FormData();
-        let $textToast = $(e.target).data('validate-true');
+        const $textToast = $(e.target).data('validate-true');
 
         $textareaSubmit.val('');
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repository\HashtagRepository;
 use App\Repository\PostHashtagRepository;
 use App\Repository\PostRepository;
 use App\Repository\StatusRepository;
@@ -13,15 +14,18 @@ class PostService
     protected $postRepository;
     protected $postHashtagRepository;
     protected $statusRepository;
+    protected $hashtagRepository;
 
     public function __construct(
         PostRepository $postRepository,
         PostHashtagRepository $postHashtagRepository,
-        StatusRepository $statusRepository
+        StatusRepository $statusRepository,
+        HashtagRepository $hashtagRepository
     ) {
         $this->postRepository = $postRepository;
         $this->postHashtagRepository = $postHashtagRepository;
         $this->statusRepository = $statusRepository;
+        $this->hashtagRepository = $hashtagRepository;
     }
 
     public function getPostByStatus($id, $slug = null, $search = null): LengthAwarePaginator
@@ -34,6 +38,7 @@ class PostService
         $configPostSlug = config('constants.post.postStatusSlugPublish');
         $configPostType = config('constants.post.postType');
         $hashtags = stringToArr($dataHandle['hashtag']);
+        $hashtagCustom = stringToArr($dataHandle['hashtagCustom']);
         $content = $dataHandle['content'];
         libxml_use_internal_errors(true);
         $dom = new DOMDocument();
@@ -67,6 +72,12 @@ class PostService
         }
 
         $postId = $this->postRepository->handlePost($dataAction, $action, $id);
+
+        if (!empty($hashtagCustom)) {
+            $arrHashtagCustom = $this->hashtagRepository->insertCustomPostHashtag($hashtagCustom);
+
+            $hashtags = array_merge($arrHashtagCustom, $hashtags);
+        }
 
         if (!empty($hashtags)) {
             $this->postHashtagRepository->insertPostHashtag($postId, $hashtags, $action);

@@ -1183,5 +1183,6 @@
     "Unset Moderator": "Bỏ đặt người điều hành",
     "Unverified": "Hủy xác minh",
     "This post had been verified": "Bài đăng này đã được xác minh",
-    "Enter the id you want to search for": "Nhập id bạn muốn tìm kiếm"
+    "Enter the id you want to search for": "Nhập id bạn muốn tìm kiếm",
+    "The tag already exists in the list.": "Thẻ đã tồn tại trong danh sách."
 }
